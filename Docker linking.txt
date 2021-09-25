@@ -1,0 +1,10 @@
+Link docker container
+docker run --name mysqlcontainer -e MYSQL_ROOT_PASSWORD=admin123 -d mysql
+ubuntu@ip-10-200-0-80:~$ docker exec -it d15623430961e6d12735bd43131579d4bb969573979056297d0633682f2c8f66 bash
+mysql -u root -p
+admin123
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ubuntu@ip-10-200-0-80:~$ docker run -d --name mysqldbcontainer mysql 
+ubuntu@ip-10-200-0-80:~$ docker run -d --name backendcontainer --link mysqlcontainer:mysql backend 
+ubuntu@ip-10-200-0-80:~$ docker run -d --name frontendcontainer -p 80:80  --link backendcontainer:backend frontend
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

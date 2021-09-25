@@ -1,0 +1,50 @@
+Commands :: Common
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ubuntu@ip-10-200-0-80:~$ docker container ls
+ubuntu@ip-10-200-0-80:~$ docker network ls
+ubuntu@ip-10-200-0-80:~$ docker volume ls
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Commands :: Docker Image
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+BUILD an image from Dockerfile ====> # docker build -t mysqldbimage .
+LIST all the images on your system ===> # docker image ls
+SHOW images ====> # docker images
+DELETE image through image id ====> # docker image rm [image_id1] [image_id2]
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Commands :: Docker Container
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE container from image ====> # docker run -it --name mysqldbcontainer mysqldbimage /bin/bash 
+START docker container ====>  # docker container start f8a68caf436b
+ACCESS of running container ====> # docker attach containername  =====> docker exec -it f8a68caf436b bash
+LIST of all running containers ====> # sudo docker ps
+LIST of container ====> # docker container ls
+LIST of all the RUNNING containers ====> # docker container ls -a
+LIST of all the containers only by their numeric ID's ====> # docker container ls -aq 
+STOP a specific container ====> # docker container stop [container_id]	
+STOP ALL containers ====> # docker container stop $(docker container ls -aq)
+REMOVE a stopped container ====> # docker container rm [container_id]
+REMOVE all stopped containers ====> # docker container rm $(docker container ls -aq)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Commands :: Docker-Network
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+LIST of networks ====>  docker network ls
+IP address of container =====> docker inspect frontendcontainer | grep IPAddress
+EXPOSE PORT to host =====> docker run -td --name webserver -p 80(local port):80(container port) ubuntu
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Command :: Docker-Volume
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ubuntu@ip-10-200-0-80:~$ docker volume ls
+ubuntu@ip-10-200-0-80:~$ docker volume prune
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Commands :: Docker-Compose |||||||| ubuntu@ip-10-200-0-80:~$ docker-compose --help
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ubuntu@ip-10-200-0-80:~$ docker-compose up -d           		{Creating network "ubuntu_default" with the default driver}
+ubuntu@ip-10-200-0-80:~$ docker-compose down
+ubuntu@ip-10-200-0-80:~$ docker-compose ps
+ubuntu@ip-10-200-0-80:~$ docker-compose build
+ubuntu@ip-10-200-0-80:~$ docker-compose images
+ubuntu@ip-10-200-0-80:~$ docker-compose stop
+ubuntu@ip-10-200-0-80:~$ docker-compose run
+
+

@@ -1,0 +1,8 @@
+# dockerfile for mysql
+FROM mysql
+MAINTAINER Ritesh
+LABEL "database"="mysqldb"
+EXPOSE 3306
+~
+~
+~

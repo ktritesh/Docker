@@ -1,0 +1,74 @@
+Install and Use Docker on Ubuntu 18.04
+Docker is an application that simplifies the process of managing application processes in containers. 
+Containers let you run your applications in resource-isolated processes. 
+They’re similar to virtual machines, but containers are more portable, more resource-friendly, and more dependent on the host operating system.
+
+Run the following command
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+apt-cache policy docker-ce
+sudo apt install docker-ce
+sudo systemctl status docker (running)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+How to Build a Docker Image with MySQL Database.
+root@ip-10-200-0-165:~# vi Dockerfile
+# Derived from official mysql image (our base image)
+FROM mysql
+# Add a database
+ENV MYSQL_DATABASE chatapp
+
+Create your Docker image:
+root@ip-10-200-0-165:~# docker build -t mysql .
+Successfully built be680fdf449a
+Successfully tagged mysql:latest
+( -t is used for tag purpose, and (.) is specifiying that you are using your deocker file in current directory.
+
+Image is created
+root@ip-10-200-0-165:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+mysql        latest    be680fdf449a   9 minutes ago   514MB
+
+Now set a password foe your db
+root@ip-10-200-0-165:~# docker run -d -p 3306:3306 --name mysql \
+> -e MYSQL_ROOT_PASSWORD=admin123 mysql
+d6d8e07ae29fc3cb3cfc272f4fc515a9812ac3ee7e89ab7133c82af9de361704
+
+Now create a container from image
+root@ip-10-200-0-165:~# docker run -it --name mysqlcontainer mysql /bin/bash
+(here i = interactive mode, t=terminal, give a name to conatiner i.e. --name mysqlcontainer, where mysql is image name)
+root@d1668450aab2:/#  ( container is created and we are inside the conatiner )
+root@d1668450aab2:/# ls
+bin   dev                         entrypoint.sh  home  lib64  mnt  proc  run   srv  tmp  var
+boot  docker-entrypoint-initdb.d  etc            lib   media  opt  root  sbin  sys  usr
+
+root@ip-10-200-0-165:~# docker pull mysql
+root@ip-10-200-0-165:~# docker run --name mysqldb -e MYSQL_ROOT_PASSWORD=admin123 -d mysql
+root@ip-10-200-0-165:~# docker exec -it a160bfb28c25 bash
+root@a160bfb28c25:/# mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.01 sec)
+
+mysql>
+
+
+
+connect mysqlcontainer with mysqlrds
+mysql -h <RDS endpoint> -u <username> -p
+root@d1668450aab2:/# mysql -h mysqldb.c4lzqxngyg8f.ap-south-1.rds.amazonaws.com -u admin -p
+password:admin123
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
